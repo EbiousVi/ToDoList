@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Registration</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Registration</h2>
+        <h4>Welcome to Ace</h4>
+    </div>
+    <form class="form-group" th:action="@{/registration}" method="post" th:object="${user}">
+        <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="text" id="email" th:field="*{email}" class="form-control" placeholder="Enter Email">
+            <small class="form-text text-danger" th:each="err : ${#fields.errors('email')}" th:text="${err}">Validation
+                error</small>
+        </div>
+
+        <div class="mb-3">
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Password">
+            <small class="form-text text-danger" th:each="err : ${#fields.errors('password')}" th:text="${err}">Validation
+                error</small>
+        </div>
+        <div class="mb-3">
+            <label for="username">Username</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Enter Username">
+            <small class="form-text text-danger" th:each="err : ${#fields.errors('username')}" th:text="${err}">Validation
+                error</small>
+        </div>
+        <div class="g-recaptcha" data-sitekey="6LeSh88ZAAAAAJJ5nITcxBAO4d3ZWxIIBUqXM6d3"></div>
+        <div class="alert alert-" th:attrappend="class=${type}" role="alert" th:text="${captchaError}">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registration</button>
+    </form>
+</div>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+</html>

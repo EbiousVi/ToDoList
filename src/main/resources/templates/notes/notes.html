@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" th:href="@{/home}" href="/home">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home/notes/}" href="/home/notes/">Your Evernotes<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home/team/your-team}" href="/home/team/your-team">Your Team<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/home/team}" href="/home/team">Team-Service<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <span class="navbar-text" th:text="${#request.getUserPrincipal().getName()}"></span>
+        </div>
+    </nav>
+    <div class="col-xl-12">
+        <h1 class="text-center">Table</h1>
+        <form class="form-group" method="POST" th:action="@{/home/notes/}">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 2</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:object="${notesDto}">
+                    <td>
+                        <label for="input1">
+                            <input th:field="*{note1}" id="input1" class="input-group" type="text" placeholder="text"
+                                   name="deadline">
+                        </label>
+                    </td>
+                    <td>
+                        <label for="input2">
+                            <input th:field="*{note2}" id="input2" class="input-group" type="text" placeholder="text"
+                                   name="results">
+                        </label>
+                    </td>
+                    <td>
+                        <label for="input3">
+                            <input th:field="*{note3}" id="input3" class="input-group" type="text" placeholder="text"
+                                   name="links">
+                        </label>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr th:each="notes : ${notes}">
+                    <td class="text-justify" th:text="${notes.note1}"></td>
+                    <td class="text-justify" th:text="${notes.note2}"></td>
+                    <td class="text-justify" th:text="${notes.note3}"></td>
+                    <td th:if="${#request.getUserPrincipal().getName()} eq ${notes.user.email}">
+                        <a th:href="@{/home/notes/{id}(id=${notes.id})}" class="btn btn-dark">Delete</a>
+                        <a th:href="@{/home/notes/user-update/{id}(id=${notes.id})}"
+                           class="btn btn-dark">Change</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <th:block th:switch="${comradeEmail}">
+                <div th:case="null" th:with="var=${#request.getUserPrincipal().getName()}">
+                    <button th:if="${#request.getUserPrincipal().getName()} eq ${var}" type="submit"
+                            class="btn btn-dark btn-lg btn-block">
+                        Send
+                    </button>
+                </div>
+                <div th:case="${comradeEmail}">
+                    <button th:if="${#request.getUserPrincipal().getName()} eq ${comradeEmail}" type="submit"
+                            class="btn btn-dark btn-lg btn-block">
+                        Send
+                    </button>
+                </div>
+            </th:block>
+        </form>
+    </div>
+</div>
+</body>
+</html>
